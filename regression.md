@@ -1,6 +1,7 @@
-# 回帰
+# 回帰（Regression）
+- 連続値の予測やモデル化
 
-## 線形回帰系
+## 1. 線形回帰系
 - **最小二乗法（Ordinary Least Squares, OLS）**  
   - 回帰分析の基本で、シンプルな線形モデルで広く使用される。
 - **リッジ回帰（Ridge Regression）**  
@@ -10,7 +11,7 @@
 - **Elastic Net回帰（Elastic Net Regression）**  
   - リッジ回帰とラッソ回帰の特性を組み合わせた手法。
 
-## 一般化線形モデル（GLM）に基づく手法
+## 2. 一般化線形モデル（GLM）に基づく手法
 - **ロジスティック回帰（Logistic Regression）**  
   - 二値分類問題で頻繁に使用される。
 - **ポアソン回帰（Poisson Regression）**  
@@ -18,17 +19,17 @@
 - **負の二項回帰（Negative Binomial Regression）**  
   - カウントデータで分散が平均より大きい場合に使用。
 
-## 非線形回帰
+## 3. 非線形回帰
 - **多項式回帰（Polynomial Regression）**  
   - 非線形の関係を線形モデルで近似する場合に利用。
 - **スプライン回帰（Spline Regression）**  
   - 柔軟なフィットが必要な非線形データに適用。
 
-## ベイズ的手法
+## 4. ベイズ的手法
 - **ベイズ回帰（Bayesian Regression）**  
   - 不確実性の推定が重要な場合や、先行知識をモデルに組み込みたい場合に利用。
 
-## 機械学習ベース
+## 5. 機械学習ベース
 - **サポートベクター回帰（Support Vector Regression, SVR）**  
   - 小規模データセットで強力な性能を発揮。
 - **ランダムフォレスト回帰（Random Forest Regression）**  
@@ -38,7 +39,7 @@
 - **ニューラルネットワーク回帰（Neural Network Regression）**  
   - 複雑な非線形パターンを扱う際に利用。
 
-## 時系列分析
+## 6. 時系列分析
 - **自己回帰モデル（Autoregressive Model, AR）**  
   - 短期予測の基本モデル。
 - **自己回帰移動平均モデル（Autoregressive Moving Average, ARMA）**  
@@ -46,7 +47,7 @@
 - **自己回帰統合移動平均モデル（Autoregressive Integrated Moving Average, ARIMA）**  
   - トレンド除去や季節性調整が必要な時系列データに適用。
 
-## 特殊用途
+## 7. 特殊用途
 - **分位点回帰（Quantile Regression）**  
   - データの特定分位点（例: 中央値や上位10%）をモデル化。
 - **サバイバル回帰（Survival Regression）**  
