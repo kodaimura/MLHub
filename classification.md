@@ -1,4 +1,5 @@
-# 分類手法
+# 分類（Classification）
+- データを離散的なカテゴリに分類
 
 ## **1. 線形分類**
 - **ロジスティック回帰（Logistic Regression）**  
