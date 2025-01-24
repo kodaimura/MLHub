@@ -4,5 +4,5 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./julia:/workspace
+      - .:/workspace
     working_dir: /workspace
