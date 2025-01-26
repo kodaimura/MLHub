@@ -37,10 +37,10 @@ function train_model!(f_loss, model, features, labels, learning_rate=0.01)
     @. model.bias = model.bias - learning_rate * dLdm.bias
 end
 
-function train_until_converged!(f_loss, model, features, labels; max_epochs=10000, tolerance=1e-4)
+function train_until_converged!(f_loss, model, features, labels; max_epochs=10000, tolerance=1e-4, learning_rate=0.01)
     loss_prev = Inf
     for epoch in 1:max_epochs
-        train_model!(f_loss, model, features, labels)
+        train_model!(f_loss, model, features, labels; learning_rate=learning_rate)
         current_loss = f_loss(model, features, labels)
 
         if loss_prev == Inf
