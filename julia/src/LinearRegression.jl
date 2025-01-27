@@ -4,7 +4,7 @@ Pkg.activate(".")
 using Flux
 using Plots
 
-function loss(model, features, labels)
+function loss_mse(model, features, labels)
     y_hat = model(features)
     return Flux.mse(y_hat, labels)
 end
@@ -31,24 +31,30 @@ function loss_elastic_net(model, features, labels; lambda1=0.01, lambda2=0.01)
     return mse_loss + l1_penalty + l2_penalty
 end
 
-function train_model!(f_loss, model, features, labels; learning_rate=0.01)
-    dLdm, _, _ = gradient(f_loss, model, features, labels)
+function train_model!(loss, model, features, labels; learning_rate=0.01)
+    dLdm, _, _ = gradient(loss, model, features, labels)
     @. model.weight = model.weight - learning_rate * dLdm.weight
     @. model.bias = model.bias - learning_rate * dLdm.bias
 end
 
-function train_until_converged!(f_loss, model, features, labels; max_epochs=10000, tolerance=1e-4, learning_rate=0.01)
+function train_model!(loss, model, data; learning_rate=0.01)
+    Flux.train!(loss, model, data, Descent(learning_rate))
+end
+
+function train_until_converged!(loss, model, data; max_epochs=10000, tolerance=1e-4, learning_rate=0.01)
+    x = hcat([d[1] for d in data]...)
+    y = hcat([d[2] for d in data]...)
     loss_prev = Inf
     for epoch in 1:max_epochs
-        train_model!(f_loss, model, features, labels; learning_rate=learning_rate)
-        current_loss = f_loss(model, features, labels)
+        train_model!(loss, model, data; learning_rate=learning_rate)
+        current_loss = loss(model, x, y)
 
         if loss_prev == Inf
             loss_prev = current_loss
             continue
         end
 
-        if abs(loss_prev - current_loss) < tolerance
+        if current_loss < 1 && abs(loss_prev - current_loss) < tolerance
             println("Converged at epoch $epoch with loss $current_loss")
             break
         end
@@ -59,15 +65,13 @@ end
 function main()
     #単回帰サンプル
     (function()
-        x = hcat(collect(Float32, -3:0.1:3)...)
-        f(x) = @. 3 * x
-        y = reshape(f(x), 1, 61)
-        x = x .+ reshape(rand(Float32, 61), (1, 61))
-        y = y .+ reshape(rand(Float32, 61), (1, 61))
+        data = [([x + rand(Float32)], 3x + 5 + rand(Float32)) for x in -3:0.1f0:3]
+        x = hcat([d[1] for d in data]...)
+        y = hcat([d[2] for d in data]...)
 
-        f_loss = (model, x, y) -> loss_ridge(model, x, y; lambda=0.05)
+        loss = (model, x, y) -> loss_mse(model, x, y)
         model = Flux.Dense(1 => 1)
-        train_until_converged!(f_loss, model, x, y)
+        train_until_converged!(loss, model, data; tolerance=1e-6)
         predicted_values = model(x)
 
         plot(vec(x), vec(y), seriestype = :scatter, label="True values", title="Model Training")
@@ -78,14 +82,19 @@ function main()
 
     #重回帰サンプル
     (function()
-        x = rand(Float32, 5, 100)
-        f(x) = @. 3 * x[1, :] + 2 * x[2, :] - x[3, :] + 4 * x[4, :] - 2 * x[5, :] + 1
-        y = reshape(f(x), 1, 100)
-        y = y .+ reshape(rand(Float32, 100), (1, 100))
-
-        f_loss = (model, x, y) -> loss(model, x, y)
+        f(x) = 3x[1] + 2x[2] - x[3] + 4x[4] - 2x[5] + 1
+        data = []
+        for i in 1:100
+            xi = [rand(Float32), rand(Float32), rand(Float32), rand(Float32), rand(Float32)]
+            yi = f(xi) + rand(Float32)
+            push!(data, (xi, yi))
+        end
+        x = hcat([d[1] for d in data]...)
+        y = hcat([d[2] for d in data]...)
+        
+        loss = (model, x, y) -> loss_mse(model, x, y)
         model = Flux.Dense(5 => 1)
-        train_until_converged!(f_loss, model, x, y; tolerance=1e-6)
+        train_until_converged!(loss, model, data; tolerance=1e-6)
         predicted_values = model(x)
 
         plot(1:100, y[1, :], seriestype = :scatter, label="True values", title="Model Training")
