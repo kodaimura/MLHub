@@ -8,7 +8,7 @@ using Statistics
 
 function loss(model, features, labels_onehot)
     y_hat = model(features)
-    Flux.logitcrossentropy(y_hat, labels_onehot)
+    return Flux.logitcrossentropy(y_hat, labels_onehot)
 end
 
 function train_model!(f_loss, model, features, labels_onehot; learning_rate=0.01)

@@ -6,7 +6,7 @@ using Plots
 
 function loss(model, features, labels)
     y_hat = model(features)
-    Flux.mse(y_hat, labels)
+    return Flux.mse(y_hat, labels)
 end
 
 function loss_lasso(model, features, labels; lambda=0.01)
