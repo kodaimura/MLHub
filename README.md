@@ -5,11 +5,10 @@
 - **回帰 (Regression)**: 連続的な値（例：価格予測、株価予測）を予測したいとき
 - **分類 (Classification)**: カテゴリカルなラベル（例：スパムメール分類、画像分類）を予測したいとき
 
-## 教師なし学習 (Unsupervised Learning)
+## [教師なし学習 (Unsupervised Learning)](https://github.com/kodaimura/AIHub/blob/main/docs/Unsupervised/README.md)
 目的：**ラベルなしデータ**からパターンや構造を学習したいとき
 - **クラスタリング (Clustering)**: データを似た特徴を持つグループに分けたいとき（例：顧客セグメンテーション、異常検知）
 - **次元削減 (Dimensionality Reduction)**: 高次元データを低次元に圧縮して、データの可視化や計算量削減を行いたいとき（例：PCAを用いてデータを可視化）
-- **生成モデル (Generative Models)**: 新しいデータを生成したいとき（例：画像生成、テキスト生成）
 
 ## 半教師あり学習 (Semi-Supervised Learning)
 目的：少量のラベル付きデータと大量のラベルなしデータを活用して学習したいとき
