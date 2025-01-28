@@ -1,4 +1,4 @@
-# AIHub
+# MLHub
 
 ## [教師あり学習 (Supervised Learning)](https://github.com/kodaimura/AIHub/blob/main/docs/Supervised/README.md)
 目的：**ラベル付きデータ**を使って学習し、予測や分類を行いたいとき
