@@ -16,7 +16,7 @@
 
 ---
 
-### 2. 分類 (Classification)
+### 2. [分類 (Classification)](https://github.com/kodaimura/AIHub/blob/main/docs/Supervised/Classification/README.md)  
 離散値 (クラスラベル) を予測する問題。
 
 **例**:  
